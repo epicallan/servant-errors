@@ -18,10 +18,18 @@ cabal-dev
 .cabal-sandbox/
 cabal.sandbox.config
 cabal.config
+
+# only needed for building with cabal new-build locally
 cabal.project.local
+cabal.project
+hackage-deploy
+
+cabal.project.freeze
 .ghc.environment.*
 .HTF/
+docs.sh
 # Stack
+stack.yaml.lock
 .stack-work/
 
 ### IDE/support

@@ -22,10 +22,10 @@ With `servant-errors`  library, you get a single interface to structure and enco
 main :: IO ()
 main = run 8001 (serve proxyApi handlers)
 
--- | With servant-errors as error processing middleware, it's of this form.
+-- | With servant-errors as error processing middleware
 main :: IO ()
-main = run 8001 
-     $ errorMw @JSON @["error", "status"]
+main = run 8001
+     $ errorMw @JSON @'["error", "status"]
      -- ^ Structures error response as JSON objects
      -- with 'error' and 'status' strings as error object field keys
      -- note they can be changed to any other preferred strings.
@@ -35,7 +35,7 @@ main = run 8001
 -- if you want to output JSON error responses with 'error'
 -- and 'status' as the JSON Object keys
 main :: IO ()
-main = run 8001 
+main = run 8001
      $ errorMwDefJson
      -- ^ Default implementation of structuring error responses as JSON
      -- with no customisation option for JSON error object field keys
@@ -75,7 +75,7 @@ newtype Greet = Greet { msg :: Text }
 -- servant application
 main' :: IO ()
 main' = run 8001
-  $ errorMw @JSON @["error", "status"]
+  $ errorMw @JSON @'["error", "status"]
   -- ^ @JSON specifies content type encoding of errors
   -- @["error", "status"] specifies error and code text label in resulting JSON error response
   -- when an empty type level list parameter for 'errorMw' is specified
@@ -86,7 +86,7 @@ main' = run 8001
     handler = return . id
     api = Proxy @(ReqBody '[JSON] Greet :> Post '[JSON] Greet)
 
--- | Example Below shows the derivation of an alternative 'HasErrorBody' instance 
+-- | Example Below shows the derivation of an alternative 'HasErrorBody' instance
 -- for JSON error responses if you want to implement more customisation
 ----------------------------------------------------------------------------------------
 ----------------------------------------------------------------------------------------
