@@ -1,10 +1,10 @@
 cabal-version:       2.0
-name:                servant-error-options
+name:                servant-errors
 version:             0.0.0.0
 synopsis:            See README for more info
 description:         See README for more info
-homepage:            https://github.com/epicallan/servant-error-options
-bug-reports:         https://github.com/epicallan/servant-error-options/issues
+homepage:            https://github.com/epicallan/servant-errors
+bug-reports:         https://github.com/epicallan/servant-errors/issues
 license:             MIT
 license-file:        LICENSE
 author:              Lukwago Allan
@@ -18,15 +18,23 @@ tested-with:         GHC == 8.6.4
 
 source-repository head
   type:                git
-  location:            https://github.com/epicallan/servant-error-options.git
-
+  location:            https://github.com/epicallan/servant-errors.git
 library
   hs-source-dirs:      src
-  exposed-modules:     ServantErrorOptions
-                       
+  exposed-modules:     Network.Wai.Middleware.Servant.Errors
 
   build-depends:       base ^>= 4.12.0.0
-                     
+                     , aeson
+                     , bytestring
+                     , http-types
+                     , http-api-data
+                     , http-media
+                     , scientific
+                     , servant
+                     , string-conversions
+                     , text
+                     , unordered-containers
+                     , wai
 
   ghc-options:         -Wall
                        -Wincomplete-uni-patterns
@@ -35,18 +43,9 @@ library
                        -Widentities
                        -Wredundant-constraints
                        -fhide-source-paths
-                       -Wmissing-export-lists
                        -Wpartial-fields
 
   default-language:    Haskell2010
-
-executable servant-error-options
-  hs-source-dirs:      app
-  main-is:             Main.hs
-
-  build-depends:       base ^>= 4.12.0.0
-                     , servant-error-options
-                     
 
   ghc-options:         -Wall
                        -threaded
@@ -58,31 +57,21 @@ executable servant-error-options
                        -Widentities
                        -Wredundant-constraints
                        -fhide-source-paths
-                       -Wmissing-export-lists
                        -Wpartial-fields
 
   default-language:    Haskell2010
 
-test-suite servant-error-options-test
+test-suite readme
+  build-depends:       base
+                     , aeson
+                     , text
+                     , servant-errors
+                     , servant-server
+                     , wai
+                     , warp
+
+  main-is:             README.lhs
   type:                exitcode-stdio-1.0
-  hs-source-dirs:      test
-  main-is:             Spec.hs
-
-  build-depends:       base ^>= 4.12.0.0
-                     , servant-error-options
-                     
-
-  ghc-options:         -Wall
-                       -threaded
-                       -rtsopts
-                       -with-rtsopts=-N
-                       -Wincomplete-uni-patterns
-                       -Wincomplete-record-updates
-                       -Wcompat
-                       -Widentities
-                       -Wredundant-constraints
-                       -fhide-source-paths
-                       -Wmissing-export-lists
-                       -Wpartial-fields
-
   default-language:    Haskell2010
+  ghc-options:         -pgmL markdown-unlit -Wall
+  build-tool-depends:  markdown-unlit:markdown-unlit

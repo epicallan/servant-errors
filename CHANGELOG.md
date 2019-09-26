@@ -1,6 +1,6 @@
 # Changelog
 
-`servant-error-options` uses [PVP Versioning][1].
+`servant-errors` uses [PVP Versioning][1].
 The changelog is available [on GitHub][2].
 
 ## 0.0.0.0
@@ -8,4 +8,4 @@ The changelog is available [on GitHub][2].
 * Initially created.
 
 [1]: https://pvp.haskell.org
-[2]: https://github.com/epicallan/servant-error-options/releases
+[2]: https://github.com/epicallan/servant-errors/releases
