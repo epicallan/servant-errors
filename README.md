@@ -10,9 +10,9 @@ This package implements a wai-middleware targeting servant-server applications w
 
 ## Motivation
 
-By default, when your servant server application experiences an internal exception during endpoint route resolution, e.g. request body decode errors. The server response is just plain text with a status code in the HTTP headers.
+By default, when your servant server application experiences an internal exception during endpoint route resolution, e.g. request body decode errors, the server response is just plain text with a status code in the HTTP headers.
 
-At the same time, if you don't write custom code to customise error responses for errors thrown within servant route handlers the default response is plain text with an HTTP content-type if set within `ServerError`.
+At the same time, if you don't write custom code to customise error responses for errors thrown within servant route handlers; the default response is plain text with an HTTP content-type when provided within `ServerError`.
 
 With `servant-errors`  library, you get a single interface to structure and encode your error responses in one place as `JSON` error response or any other preferred form.
 
