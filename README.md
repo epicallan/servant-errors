@@ -8,8 +8,9 @@
 
 This package implements a wai-middleware targeting servant-server applications with a goal of make it easier to generate custom server error responses.
 
-> Checkout accompanying blogpost for more details.
->  * [Unifying Servant server error responses](https://lukwagoallan.com/posts/unifying-servant-server-error-responses)
+### Checkout accompanying blogpost for more details.
+
+* [Unifying Servant server error responses](https://lukwagoallan.com/posts/unifying-servant-server-error-responses)
 
 ## Motivation
 
