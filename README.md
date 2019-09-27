@@ -22,7 +22,7 @@ With `servant-errors`  library, you get a single interface to structure and enco
 main :: IO ()
 main = run 8001 (serve proxyApi handlers)
 
--- | With servant-errors as error processing middleware
+-- | With 'errorMw' from servant-errors library as an error processing middleware
 main :: IO ()
 main = run 8001
      $ errorMw @JSON @'["error", "status"]
