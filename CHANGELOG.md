@@ -20,3 +20,7 @@ The changelog is available [on GitHub][2].
 ## 0.1.1.0
 
 * support more GHC versions (8.2 - 8.6)
+
+## 0.1.2.0
+
+* fix reversed object key fields in errors

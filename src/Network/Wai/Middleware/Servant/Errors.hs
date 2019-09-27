@@ -70,7 +70,7 @@ import qualified Data.Text as T
 import GHC.TypeLits (KnownSymbol, Symbol, symbolVal)
 import qualified Network.HTTP.Media as M
 import Network.HTTP.Types (Header, Status (..), hContentType)
-import Network.Wai (Application, Response, responseHeaders, responseLBS, responseStatus,
+import Network.Wai (Response, Middleware, responseHeaders, responseLBS, responseStatus,
                     responseToStream)
 import Servant.API.ContentTypes (Accept (..), JSON, PlainText)
 
@@ -108,14 +108,14 @@ class Accept ctyp => HasErrorBody (ctyp :: Type) (opts :: [Symbol]) where
 
 instance  (KnownSymbol errLabel, KnownSymbol statusLabel)
   => HasErrorBody JSON '[errLabel, statusLabel] where
-    encodeError = encodeAsJsonError (getErrorLabels @statusLabel @errLabel)
+    encodeError = encodeAsJsonError (getErrorLabels @errLabel @statusLabel)
 
 instance HasErrorBody JSON '[] where
   encodeError = encodeError @JSON @["error", "status"]
 
 instance  (KnownSymbol errLabel, KnownSymbol statusLabel)
   => HasErrorBody PlainText '[errLabel, statusLabel] where
-    encodeError = encodeAsPlainText (getErrorLabels @statusLabel @errLabel)
+    encodeError = encodeAsPlainText (getErrorLabels @errLabel @statusLabel)
 
 instance HasErrorBody PlainText '[] where
   encodeError = encodeError @JSON @["error", "status"]
@@ -127,7 +127,7 @@ instance HasErrorBody PlainText '[] where
 -- A resulting response may look like this:
 -- @\{ error: \"failed to decode request body\", status: 400 \}@
 --
-errorMwDefJson :: Application -> Application
+errorMwDefJson :: Middleware
 errorMwDefJson = errorMw @JSON @'[]
 
 -- | 'errorMw' functions provides "Network.Wai" middleware for formatting error responses
@@ -136,15 +136,15 @@ errorMwDefJson = errorMw @JSON @'[]
 --
 -- > errorMw @JSON @'[ "error", "status"]
 --
-errorMw :: forall ctyp opts. HasErrorBody ctyp opts => Application -> Application
+errorMw :: forall ctyp opts. HasErrorBody ctyp opts => Middleware
 errorMw baseApp req respond =
   baseApp req $ \ response -> do
      let status      = responseStatus response
          mcontentType = getContentTypeHeader response
+         processResponse = newResponse @ctyp @opts status response >>= respond
      case (status, mcontentType) of
        (Status 200 _, _)                     -> respond response
-       (Status code _, Nothing) | code > 200 ->
-         newResponse @ctyp @opts status response >>= respond
+       (Status code _, Nothing) | code > 200 -> processResponse
        _                                     -> respond response
   where
     getContentTypeHeader :: Response -> Maybe Header
