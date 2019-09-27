@@ -16,3 +16,7 @@ The changelog is available [on GitHub][2].
 
 [1]: https://pvp.haskell.org
 [2]: https://github.com/epicallan/servant-errors/releases
+
+## 0.1.1.0
+
+* support more GHC versions (8.2 - 8.6)
