@@ -55,7 +55,6 @@ This [blog post](https://lukwagoallan.com/posts/unifying-servant-server-error-re
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE DeriveAnyClass #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE DerivingVia #-}
 
 module Main where
 
@@ -92,11 +91,20 @@ main' = run 8001
 ----------------------------------------------------------------------------------------
 
 -- | We need a newtype like data type to avoid orphan instances, 'Ctyp' satisfy's that
--- We also make use of deriving via to get an Accept instance easily.
--- Note: 'HasErrorBody' instance requires an Accept instance for a content-type
+-- Also note that 'HasErrorBody' instance requires an Accept instance for a content-type
 
 data Ctyp a
-  deriving Accept via JSON
+
+{-
+ if you are using GHC 8.6 and above you can make use of deriving Via
+ for creating the Accept Instance
+ @ data Ctyp a
+   deriving Accept via JSON
+ @
+-}
+
+instance Accept (Ctyp JSON) where
+  contentType _ = contentType (Proxy @JSON)
 
 instance HasErrorBody (Ctyp JSON) '[] where
   encodeError = undefined -- write your custom implementation

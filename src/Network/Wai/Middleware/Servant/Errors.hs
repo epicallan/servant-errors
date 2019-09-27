@@ -62,6 +62,7 @@ import qualified Data.HashMap.Strict as H
 import Data.IORef (modifyIORef', newIORef, readIORef)
 import Data.Kind (Type)
 import Data.List (find)
+import Data.Monoid ((<>))
 import Data.Proxy (Proxy (..))
 import Data.Scientific (Scientific)
 import Data.String.Conversions (cs)
