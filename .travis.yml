@@ -21,6 +21,7 @@ install:
     ghc --version
     cabal --version
     cabal new-update
+    cabal new-configure 
     cabal new-build --enable-tests
 
 script:

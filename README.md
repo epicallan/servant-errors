@@ -98,9 +98,9 @@ data Ctyp a
 {-
  if you are using GHC 8.6 and above you can make use of deriving Via
  for creating the Accept Instance
- @ data Ctyp a
-   deriving Accept via JSON
- @
+
+ >> data Ctyp a
+ >>   deriving Accept via JSON
 -}
 
 instance Accept (Ctyp JSON) where
