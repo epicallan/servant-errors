@@ -143,7 +143,6 @@ errorMw baseApp req respond =
          mcontentType = getContentTypeHeader response
          processResponse = newResponse @ctyp @opts status response >>= respond
      case (status, mcontentType) of
-       (Status 200 _, _)                     -> respond response
        (Status code _, Nothing) | code > 200 -> processResponse
        _                                     -> respond response
   where
