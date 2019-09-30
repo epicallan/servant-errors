@@ -1,6 +1,6 @@
 cabal-version:       2.2
 name:                servant-errors
-version:             0.1.2.0
+version:             0.1.3.0
 synopsis:            Servant Errors wai-middlware
 description:         A Wai middleware that uniformly structures errors with in a servant application. The library assumes all HTTP responses with status code greater than 200 and without an HTTP content type are error responses. This assumption is derived from servant server error handling implementation.
 

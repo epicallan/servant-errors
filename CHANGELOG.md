@@ -24,3 +24,8 @@ The changelog is available [on GitHub][2].
 ## 0.1.2.0
 
 * fix reversed object key fields in errors
+
+## 0.1.3.0
+
+* fixes PlainText HasErrorBody instance
+* couple of code refactors 
