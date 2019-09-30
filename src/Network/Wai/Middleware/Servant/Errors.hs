@@ -70,7 +70,7 @@ import qualified Data.Text as T
 import GHC.TypeLits (KnownSymbol, Symbol, symbolVal)
 import qualified Network.HTTP.Media as M
 import Network.HTTP.Types (Header, Status (..), hContentType)
-import Network.Wai (Response, Middleware, responseHeaders, responseLBS, responseStatus,
+import Network.Wai (Middleware, Response, responseHeaders, responseLBS, responseStatus,
                     responseToStream)
 import Servant.API.ContentTypes (Accept (..), JSON, PlainText)
 
@@ -141,10 +141,9 @@ errorMw baseApp req respond =
   baseApp req $ \ response -> do
      let status      = responseStatus response
          mcontentType = getContentTypeHeader response
-         processResponse = newResponse @ctyp @opts status response >>= respond
      case (status, mcontentType) of
-       (Status 200 _, _)                     -> respond response
-       (Status code _, Nothing) | code > 200 -> processResponse
+       (Status code _, Nothing) | code > 200 -> do
+         newResponse @ctyp @opts status response >>= respond
        _                                     -> respond response
   where
     getContentTypeHeader :: Response -> Maybe Header
