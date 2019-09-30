@@ -118,7 +118,7 @@ instance  (KnownSymbol errLabel, KnownSymbol statusLabel)
     encodeError = encodeAsPlainText (getErrorLabels @errLabel @statusLabel)
 
 instance HasErrorBody PlainText '[] where
-  encodeError = encodeError @JSON @["error", "status"]
+  encodeError = encodeError @PlainText @["error", "status"]
 
 -- | 'errorMwDefJson' is a convenience pre-configured function for middleware
 -- that encodes error responses as @JSON@ objects using @error@ and @status@
