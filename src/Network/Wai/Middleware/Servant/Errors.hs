@@ -142,7 +142,7 @@ errorMw baseApp req respond =
      let status      = responseStatus response
          mcontentType = getContentTypeHeader response
      case (status, mcontentType) of
-       (Status code _, Nothing) | code > 200 -> do
+       (Status code _, Nothing) | code > 200 ->
          newResponse @ctyp @opts status response >>= respond
        _                                     -> respond response
   where
