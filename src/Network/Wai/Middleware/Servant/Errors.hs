@@ -52,6 +52,8 @@ module Network.Wai.Middleware.Servant.Errors
   , StatusCode (..)
   , ErrorLabels (..)
   , getErrorLabels
+  , encodeAsJsonError
+  , encodeAsPlainText
   )where
 
 import Data.Aeson (Value (..), encode)
