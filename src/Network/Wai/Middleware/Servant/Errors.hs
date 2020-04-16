@@ -1,6 +1,6 @@
 {- |
   A Wai middleware that uniformly structures errors within a servant application.
-  The library assumes all HTTP responses with status codes greater than @200@ and
+  The library assumes all HTTP responses with status codes between @4xx@ and @5xx@ while
   lacking an @HTTP content-type@ are error responses. This assumption is derived
   from servant server error handling implementation.
 
@@ -144,7 +144,7 @@ errorMw baseApp req respond =
      let status      = responseStatus response
          mcontentType = getContentTypeHeader response
      case (status, mcontentType) of
-       (Status code _, Nothing) | code > 200 ->
+       (Status code _, Nothing) | code >= 400 && code < 600 ->
          newResponse @ctyp @opts status response >>= respond
        _                                     -> respond response
   where
