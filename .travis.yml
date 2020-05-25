@@ -2,7 +2,7 @@ sudo: true
 language: haskell
 
 git:
-  depth: 2
+  depth: 1
 
 cabal: "3.0"
 
@@ -12,9 +12,9 @@ cache:
 
 matrix:
   include:
-  - ghc: 8.2.2
   - ghc: 8.4.4
   - ghc: 8.6.5
+  - ghc: 8.8.3
 
 
 install:
@@ -22,7 +22,7 @@ install:
     ghc --version
     cabal --version
     cabal new-update
-    cabal new-configure 
+    cabal new-configure
     cabal new-build --enable-tests
 
 script:

@@ -35,6 +35,7 @@
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE KindSignatures        #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE RankNTypes            #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
@@ -56,6 +57,7 @@ module Network.Wai.Middleware.Servant.Errors
   , encodeAsPlainText
   )where
 
+import Prelude.Compat
 import Data.Aeson (Value (..), encode)
 import qualified Data.ByteString as B
 import Data.ByteString.Builder (toLazyByteString)
@@ -64,7 +66,6 @@ import qualified Data.HashMap.Strict as H
 import Data.IORef (modifyIORef', newIORef, readIORef)
 import Data.Kind (Type)
 import Data.List (find)
-import Data.Monoid ((<>))
 import Data.Proxy (Proxy (..))
 import Data.Scientific (Scientific)
 import Data.String.Conversions (cs)
