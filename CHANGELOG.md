@@ -33,3 +33,7 @@ The changelog is available [on GitHub][2].
 ## 0.1.3.1
 
 * export encoding helper functions
+
+## 0.1.5.0
+
+* Fix: use provided content-type

@@ -30,6 +30,7 @@ cabal.project.freeze
 docs.sh
 # Stack
 stack.yaml.lock
+stack.yaml
 .stack-work/
 
 ### IDE/support
