@@ -163,7 +163,7 @@ newResponse
   -> IO Response
 newResponse status@(Status code statusMsg) response = do
   body <- responseBody response
-  let header = (hContentType,  M.renderHeader $ contentType (Proxy @JSON) )
+  let header = (hContentType,  M.renderHeader $ contentType (Proxy @ctyp) )
       content = ErrorMsg . cs $ if body == mempty then statusMsg else body
       newContent = encodeError @ctyp @opts (StatusCode code) content
   return $ responseLBS status [header] newContent
