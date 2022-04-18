@@ -41,3 +41,8 @@ The changelog is available [on GitHub][2].
 ## 0.1.6.0
 
 * Fix: use provided content-type
+
+
+## 0.1.7.0
+
+* Pass old headers to new response when contentType header be added in `newResponse`.
