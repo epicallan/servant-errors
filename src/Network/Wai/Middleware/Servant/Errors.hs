@@ -164,10 +164,11 @@ newResponse
   -> IO Response
 newResponse status@(Status code statusMsg) response = do
   body <- responseBody response
-  let header = (hContentType,  M.renderHeader $ contentType (Proxy @ctyp) )
+  let oldHeaders = responseHeaders response
+  let newHeaders = (hContentType,  M.renderHeader $ contentType (Proxy @ctyp)) : oldHeaders
       content = ErrorMsg . cs $ if body == mempty then statusMsg else body
       newContent = encodeError @ctyp @opts (StatusCode code) content
-  return $ responseLBS status [header] newContent
+  return $ responseLBS status newHeaders newContent
 
 -- | 'responseBody' extracts response body from the servant server response.
 responseBody :: Response -> IO B.ByteString
