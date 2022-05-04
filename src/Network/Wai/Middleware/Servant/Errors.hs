@@ -35,7 +35,8 @@
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE KindSignatures        #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude     #-}
+{-# LANGUAGE PackageImports #-}
 {-# LANGUAGE RankNTypes            #-}
 {-# LANGUAGE RecordWildCards       #-}
 {-# LANGUAGE ScopedTypeVariables   #-}
@@ -57,12 +58,12 @@ module Network.Wai.Middleware.Servant.Errors
   , encodeAsPlainText
   )where
 
-import Prelude.Compat
-import Data.Aeson (Value (..), encode)
+import "base-compat" Prelude.Compat
+import Data.Aeson (encode, object, (.=))
+import Data.Aeson.Key (fromText)
 import qualified Data.ByteString as B
 import Data.ByteString.Builder (toLazyByteString)
 import qualified Data.ByteString.Lazy as LB
-import qualified Data.HashMap.Strict as H
 import Data.IORef (modifyIORef', newIORef, readIORef)
 import Data.Kind (Type)
 import Data.List (find)
@@ -187,11 +188,10 @@ responseBody res =
 -- Its used in the library provided 'HasErrorBody' /JSON/ instance
 encodeAsJsonError :: ErrorLabels -> StatusCode -> ErrorMsg -> LB.ByteString
 encodeAsJsonError ErrorLabels {..} code content =
-  encode $ Object
-         $ H.fromList
-           [ (errName, String $ unErrorMsg content)
-           , (errStatusName, Number $ toScientific code )
-           ]
+  encode $ object
+    [ fromText errName .= unErrorMsg content
+    , fromText errStatusName .= toScientific code
+    ]
    where
      toScientific :: StatusCode -> Scientific
      toScientific = fromInteger . fromIntegral @_ @Integer . unStatusCode
